@@ -1,0 +1,108 @@
+1998/09/02:
+	Made the exception/trap/interrupt handler work.
+	Tested the Divided by Zero Exception & Timer Interrupt.
+
+
+1998/09/03:
+	Coded the context_switch routine.
+	Coded the thread_create routine.
+
+1998/09/04:
+	Made the context_switch, thread_create, scheduler routines work.
+
+1998/09/15:
+	Made the VGA mode swith code SetVideoMode work.
+	Testing the PutPixel and FillRectangle code.
+
+1998/09/16:
+	Made PutPixel, FillRectangle, Blit work.
+
+1998/09/17:
+	Made ShowPage work.
+	Added and tested multiboot_find, multiboot_info_dump from OSKit.
+
+1998/09/22:
+	Rearrange all the makefiles. Not to make individual parts libraries.
+	Make them object files only. Because libraries can not refer to
+	external symbols.
+
+
+1998/09/25:
+	Added kernel_critical_enter & kernel_critical_leave.
+	Added malloc & free.
+
+1998/11/25:
+	Modified the linked-based memory management from C modules to a
+	C++ class.
+
+1998/12/02:
+	Create new classes : GDT and Processor.
+
+1998/12/03:
+	Create new classes : IDT and TSS.
+
+1998/12/06:
+	Modify the directory structure.
+	Eliminate the 'include' directory tree. Put include files along with
+	their implementation files.
+
+1998/12/08:
+	Add the file coff.h defining structures about COFF file format in 
+	sub-directory 'libexec'.
+
+1998/12/09:
+	Create new classes : PageDirectory and PageTable for handling paging.
+
+1998/12/10:
+	Debug PageDirectory ,PageTable, and Allocator.
+	Modify coff.h and try to gather the information contained in
+		COFF files.
+
+1998/12/11:
+	Add the C library function: strcpy from DJGPP-v2 source.
+
+1998/12/14:
+	Add the Array template class.
+		void SetSize(int nSize);
+		int GetSize() const;
+		void SetAt(int nIndex, Type& tElement);
+		Type GetAt(int nIndex) const;
+		bool CheckValid(int nIndex);
+		int FindEmptySlot();
+		int Add(Type& tElement);
+	Redesign the function ::CreateThread, because at this time
+		the concept of process has been introduced.
+	Design the function ::CreateProcessFromImage();
+	Add some member function to Process class:
+		void SetProcessID(dword nID);
+		void MemoryAllocatorSpace(void *addr, vm_size_t size);
+		void* MemoryAllocatorAlloc(vm_size_t size);
+		void* PageTableGetBase();
+		void PageTableInit();
+		void PageTableMapRange(vm_offset_t linear_address,
+			vm_offset_t physical_address, vm_size_t size, dword mapping_bits);
+
+1998/12/26:
+	Modify the context-switch related code, use hardware supported 
+	task-state-segment and iretd for context switching.
+
+1998/12/27:
+	Design the system call interface.
+
+1999/01/06:
+	Design the SystemCallDispatcher class.
+	Debug System Call Dispatcher via Call Gates, and test okay!
+	Add codes in multi_boot_main to call global object constructors.
+
+1999/01/31:
+	Redesign the List template class.
+	Add new member functions to Process class:
+		void AddThread(dword nThreadID);
+		void RemoveThread(dword nThreadID);
+
+1999/02/01:
+	Automatically generate dependency files for Makefile.
+	Add new files: serial_io.cc serial.h for outputing messages thru RS232.
+
+1999/03/09:
+	Greatly modify the overall architecture, making it more and more portable.

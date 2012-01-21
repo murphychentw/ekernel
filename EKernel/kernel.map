@@ -1,0 +1,416 @@
+
+Memory Configuration
+
+Name             Origin             Length            
+*default*        0x00000000         0xffffffff
+
+Linker script and memory map
+
+Address of section .text set to 0x100000
+LOAD Initialize/Pentium/entry.o
+LOAD Hardware/Pentium/trap_tab.o
+LOAD Hardware/Pentium/context_switch.o
+LOAD Hardware/Pentium/system_call_stub.o
+LOAD Hardware/Pentium/trigger_timer_interrupt.o
+LOAD LibC/String/Pentium/memcpy.o
+LOAD LibC/String/Pentium/memset.o
+LOAD LibC/String/Pentium/memmove.o
+LOAD Hardware/Processor.o
+LOAD Hardware/Pentium/cpuid.o
+LOAD Hardware/Pentium/Trap.o
+LOAD Hardware/Pentium/GDT.o
+LOAD Hardware/Pentium/Intel8259InterruptController.o
+LOAD Hardware/Pentium/PageDirectory.o
+LOAD Hardware/Pentium/PageTable.o
+LOAD Hardware/Pentium/PentiumMMU.o
+LOAD Hardware/Pentium/PentiumProcessor.o
+LOAD Hardware/Pentium/TSS.o
+LOAD Hardware/Pentium/IDT.o
+LOAD Initialize/Initialize.o
+LOAD Initialize/Globals.o
+LOAD Initialize/Pentium/multi_boot_main.o
+LOAD Initialize/Pentium/multi_boot_find.o
+LOAD Initialize/Pentium/multi_boot_dump.o
+LOAD Initialize/Pentium/PentiumMain.o
+LOAD Kernel/Event/Event.o
+LOAD Kernel/Event/CreateEvent.o
+LOAD Kernel/Event/OpenEvent.o
+LOAD Kernel/Event/SCEvent.o
+LOAD Kernel/Interrupt/HookInterrupt.o
+LOAD Kernel/Interrupt/InterruptDispatcher.o
+LOAD Kernel/Message/MessageQueue.o
+LOAD Kernel/Message/CreateMessageQueue.o
+LOAD Kernel/Message/OpenMessageQueue.o
+LOAD Kernel/Message/SCMessageQueue.o
+LOAD Kernel/Mutex/Mutex.o
+LOAD Kernel/Mutex/CreateMutex.o
+LOAD Kernel/Mutex/OpenMutex.o
+LOAD Kernel/Mutex/SCMutex.o
+LOAD Kernel/Process/Process.o
+LOAD Kernel/Process/CreateProcess.o
+LOAD Kernel/Process/SCFree.o
+LOAD Kernel/Process/SCMalloc.o
+LOAD Kernel/Scheduler/Scheduler.o
+LOAD Kernel/Semaphore/Semaphore.o
+LOAD Kernel/Semaphore/CreateSemaphore.o
+LOAD Kernel/Semaphore/OpenSemaphore.o
+LOAD Kernel/Semaphore/SCSemaphore.o
+LOAD Kernel/SystemCall/SystemCallDispatcher.o
+LOAD Kernel/Thread/Thread.o
+LOAD Kernel/Thread/CreateThread.o
+LOAD Kernel/Thread/TerminateThread.o
+LOAD Kernel/Thread/SCThread.o
+LOAD LibC/malloc/malloc.o
+LOAD LibC/malloc/free.o
+LOAD LibC/Stdio/doprnt.o
+LOAD LibC/Stdio/printf.o
+LOAD LibC/Stdio/puts.o
+LOAD LibC/Stdio/sprintf.o
+LOAD LibC/Stdio/serial_io.o
+LOAD LibC/String/bcopy.o
+LOAD LibC/String/bzero.o
+LOAD LibC/String/memcmp.o
+LOAD LibC/String/strcmp.o
+LOAD LibC/String/strcpy.o
+LOAD LibC/String/strlen.o
+LOAD LibC/assert/assert.o
+LOAD LibC/djgpp/libgcc2.o
+LOAD MemoryManager/MemoryManager.o
+
+.text           0x00100000     0x7e00
+ *(.text)
+ .text          0x00100000       0x79 Initialize/Pentium/entry.o
+                0x00100000                _start
+                0x00100000                start
+ *fill*         0x00100079        0x3
+ .text          0x0010007c      0x173 Hardware/Pentium/trap_tab.o
+ *fill*         0x001001ef        0x1
+ .text          0x001001f0       0x11 Hardware/Pentium/context_switch.o
+                0x001001f0                _ctx_sw(void)
+ *fill*         0x00100201        0x3
+ .text          0x00100204       0x1c Hardware/Pentium/system_call_stub.o
+                0x00100204                _SystemCallStub(void)
+ .text          0x00100220        0x3 Hardware/Pentium/trigger_timer_interrupt.o
+                0x00100220                _trigger_timer_interrupt(void)
+ *fill*         0x00100223        0x1
+ .text          0x00100224       0x4a LibC/String/Pentium/memcpy.o
+                0x00100224                _memcpy(void *, void const *, unsigned long)
+ *fill*         0x0010026e        0x2
+ .text          0x00100270       0x43 LibC/String/Pentium/memset.o
+                0x00100270                _memset(void *, int, unsigned long)
+ *fill*         0x001002b3        0x1
+ .text          0x001002b4       0x26 LibC/String/Pentium/memmove.o
+                0x001002b4                _memmove(void *, void const *, unsigned long)
+ *fill*         0x001002da        0x2
+ .text          0x001002dc      0xc08 Hardware/Pentium/cpuid.o
+                0x00100ed0                _cpu_info_dump(cpu_info *)
+                0x001002dc                _cpuid(cpu_info *)
+                0x00100a04                _cpu_info_format(cpu_info *, void (*)(void *, char const *,...), void *)
+ .text          0x00100ee4      0x328 Hardware/Pentium/Trap.o
+                0x001011bc                _trap_dump_panic(trap_state const *)
+                0x0010105c                _trap_dump(trap_state const *)
+                0x001011cc                _trap_handler(trap_state *)
+ .text          0x0010120c      0x218 Hardware/Pentium/GDT.o
+                0x0010135c                GDT::_FillDescriptor(unsigned short, unsigned long, unsigned long, unsigned char, unsigned char)
+                0x001012c4                GDT::_ModifyDescriptorAccess(unsigned short, unsigned char, unsigned long)
+                0x0010123c                GDT::_FillGate(unsigned short, unsigned short, unsigned long, unsigned char, unsigned char)
+ .text          0x00101424      0x300 Hardware/Pentium/Intel8259InterruptController.o
+                0x001016fc                Intel8259InterruptController::_DisableAll(void)
+                0x001015fc                Intel8259InterruptController::_DisableIRQ(unsigned char)
+                0x00101584                __vt$28Intel8259InterruptController
+                0x00101710                Intel8259InterruptController::_EnableAll(void)
+                0x00101454                Intel8259InterruptController::_Initialize(void)
+                0x001015e0                Intel8259InterruptController::_AcknowledgeIRQ(unsigned char)
+                0x001015c4                Intel8259InterruptController::_HookIRQ(unsigned short, void *)
+                0x0010167c                Intel8259InterruptController::_EnableIRQ(unsigned char)
+ .text          0x00101724      0x2a0 Hardware/Pentium/PageDirectory.o
+                0x001018b0                PageDirectory::_MapPage(unsigned int, unsigned int, unsigned long)
+                0x00101790                PageDirectory::_MapRange(unsigned int, unsigned int, unsigned int, unsigned long)
+                0x00101968                PageDirectory::_Deallocate(void)
+                0x00101990                PageDirectory::_Allocate(void)
+ .text          0x001019c4      0x120 Hardware/Pentium/PageTable.o
+                0x00101abc                PageTable::_Allocate(void)
+                0x00101aa8                PageTable::_Deallocate(void)
+                0x00101a0c                PageTable::_MapPage(unsigned int, unsigned int, unsigned long)
+ .text          0x00101ae4      0x1fc Hardware/Pentium/PentiumMMU.o
+                0x00101c88                PentiumMMU::_Initialize(void)
+                0x00101c50                PentiumMMU::_EnablePaging(void)
+                0x00101b30                __vt$10PentiumMMU
+                0x00101c64                PentiumMMU::_GetInitPageTableBase(void)
+                0x00101c1c                PentiumMMU::_SwitchPageTable(unsigned long)
+                0x00101bb0                PentiumMMU::_PageTableMapRangeUser(unsigned long, unsigned int, unsigned int, unsigned int)
+                0x00101bd8                PentiumMMU::_PageTableMapRangeKernel(unsigned long, unsigned int, unsigned int, unsigned int)
+                0x00101c38                PentiumMMU::_DisablePaging(void)
+                0x00101b80                PentiumMMU::_GetPageTableBase(unsigned long)
+                0x00101c00                PentiumMMU::_PageTableInitialize(unsigned long)
+ .text          0x00101ce0      0x628 Hardware/Pentium/PentiumProcessor.o
+                0x00102284                PentiumProcessor::_Initialize(void)
+                0x00101da4                PentiumProcessor::_InitializeTSS(void)
+                0x00101f58                __vt$16PentiumProcessor
+                0x0010214c                PentiumProcessor::_SetGDTR(GDT const &)
+                0x001021e0                PentiumProcessor::_InitializeGDT(void)
+                0x0010203c                PentiumProcessor::_SetThreadContext(unsigned long, void *, unsigned long, void *, void *)
+                0x001021cc                PentiumProcessor::_CPUInfoGather(void)
+                0x001022dc                PentiumProcessor::_EnableInterrupt(void)
+                0x001022d4                PentiumProcessor::_DisableInterrupt(void)
+                0x001021b8                PentiumProcessor::_CPUInfoDump(void)
+                0x00101fa8                PentiumProcessor::_SwitchContext(unsigned long, unsigned long)
+                0x001022e4                PentiumProcessor::_TriggerTimerInterrupt(void)
+                0x00102140                PentiumProcessor::_SetTR(unsigned short)
+                0x001022f0                PentiumProcessor::_CPUFeatureVerify(unsigned int)
+ .text          0x00102308       0xf8 Hardware/Pentium/IDT.o
+                0x00102350                IDT::_SetIDT(unsigned short, unsigned long, unsigned short)
+                0x001023a4                IDT::_GateInit(gate_init_entry const *)
+ .text          0x00102400      0x5dc Initialize/Initialize.o
+                0x00102478                _Initialize(void)
+                0x001029d0                _GetAvailableMemory(void)
+ .text          0x001029dc       0x30 Initialize/Globals.o
+                0x001029e8                __GLOBAL_$I$g_MemoryManager
+                0x001029f8                __GLOBAL_$D$g_MemoryManager
+ .text          0x00102a0c      0x2d4 Initialize/Pentium/multi_boot_main.o
+                0x00102c84                _multiboot_main(unsigned int)
+ .text          0x00102ce0       0x5c Initialize/Pentium/multi_boot_find.o
+                0x00102ce0                _multiboot_find(char const *)
+ .text          0x00102d3c      0x294 Initialize/Pentium/multi_boot_dump.o
+                0x00102e80                _multiboot_info_dump(void)
+ .text          0x00102fd0       0x4c Initialize/Pentium/PentiumMain.o
+                0x00102fe4                _PentiumMain(void)
+ .text          0x0010301c      0x390 Kernel/Event/Event.o
+                0x00103210                __$_5Event
+                0x001030dc                Event::_Get(unsigned long, unsigned long *, unsigned long, unsigned char)
+                0x0010323c                Event::_(void)
+                0x001031cc                Event::_SetEventName(char const *)
+                0x00103034                Event::_Set(unsigned long, unsigned long)
+ .text          0x001033ac      0x1a4 Kernel/Event/CreateEvent.o
+                0x001033d0                _CreateEvent(unsigned long *, char *, unsigned long)
+ .text          0x00103550      0x160 Kernel/Event/OpenEvent.o
+                0x00103574                _OpenEvent(unsigned long *, char *)
+ .text          0x001036b0      0x160 Kernel/Event/SCEvent.o
+                0x00103758                _SCGetEvent(void **)
+                0x001037f8                _SCCreateEvent(void **)
+                0x001037e4                _SCOpenEvent(void **)
+                0x001036d4                _SCSetEvent(void **)
+ .text          0x00103810       0x24 Kernel/Interrupt/HookInterrupt.o
+                0x0010381c                _SCHookInterrupt(void **)
+ .text          0x00103834      0x270 Kernel/Interrupt/InterruptDispatcher.o
+                0x001039ec                __$_19InterruptDispatcher
+                0x00103998                InterruptDispatcher::_HookInterrupt(unsigned long, unsigned long)
+                0x00103880                InterruptDispatcher::_Dispatch(unsigned long)
+                0x00103a00                InterruptDispatcher::_(void)
+ .text          0x00103aa4      0x524 Kernel/Message/MessageQueue.o
+                0x00103eec                MessageQueue::_SetMessageQueueName(char const *)
+                0x00103f5c                MessageQueue::_(void)
+                0x00103abc                MessageQueue::_Send(unsigned long, unsigned long, unsigned long, unsigned char)
+                0x00103f30                __$_12MessageQueue
+                0x00103c28                MessageQueue::_Get(unsigned long *, unsigned long *, unsigned long *, unsigned char)
+ .text          0x00103fc8      0x238 Kernel/Message/CreateMessageQueue.o
+                0x00103fec                _CreateMessageQueue(unsigned long *, char *, unsigned long)
+ .text          0x00104200      0x160 Kernel/Message/OpenMessageQueue.o
+                0x00104224                _OpenMessageQueue(unsigned long *, char *)
+ .text          0x00104360      0x168 Kernel/Message/SCMessageQueue.o
+                0x00104384                _SCGetMessage(void **)
+                0x001044b0                _SCCreateMessageQueue(void **)
+                0x00104410                _SCSendMessage(void **)
+                0x0010449c                _SCOpenMessageQueue(void **)
+ .text          0x001044c8      0x2e8 Kernel/Mutex/Mutex.o
+                0x001044e0                Mutex::_Signal(void)
+                0x00104640                Mutex::_(void)
+                0x001045d0                Mutex::_SetMutexName(char const *)
+                0x00104614                __$_5Mutex
+                0x00104548                Mutex::_Wait(unsigned char)
+ .text          0x001047b0      0x1a8 Kernel/Mutex/CreateMutex.o
+                0x001047d4                _CreateMutex(unsigned long *, char *, unsigned char)
+ .text          0x00104958      0x160 Kernel/Mutex/OpenMutex.o
+                0x0010497c                _OpenMutex(unsigned long *, char *)
+ .text          0x00104ab8      0x14c Kernel/Mutex/SCMutex.o
+                0x00104bec                _SCCreateMutex(void **)
+                0x00104bd8                _SCOpenMutex(void **)
+                0x00104b58                _SCWaitMutex(void **)
+                0x00104adc                _SCSignalMutex(void **)
+ .text          0x00104c04      0x330 Kernel/Process/Process.o
+                0x00104d70                __$_7Process
+                0x00104d08                Process::_MemoryAllocatorFree(void *)
+                0x00104c80                Process::_SetCommandLineArgument(char const *)
+                0x00104cc4                Process::_SetProcessName(char const *)
+                0x00104d24                Process::_MemoryAllocatorAlloc(unsigned int)
+                0x00104db8                Process::_(void)
+                0x00104c10                Process::_RemoveThread(unsigned long)
+                0x00104c64                Process::_AddThread(unsigned long)
+                0x00104d3c                Process::_MemoryAllocatorSpace(void *, unsigned int)
+ .text          0x00104f34      0x398 Kernel/Process/CreateProcess.o
+                0x00104f5c                _CreateProcessFromImage(unsigned long *, char *, char *, unsigned long, unsigned long, void *)
+ .text          0x001052cc       0xa8 Kernel/Process/SCFree.o
+                0x001052f0                _SCFree(void **)
+ .text          0x00105374       0xc4 Kernel/Process/SCMalloc.o
+                0x00105398                _SCMalloc(void **)
+ .text          0x00105438      0x4c8 Kernel/Scheduler/Scheduler.o
+                0x001057fc                Scheduler::_GetNextThread(void)
+                0x00105700                Scheduler::_CheckIn(unsigned long)
+                0x001056e8                Scheduler::_Yield(void)
+                0x00105828                Scheduler::_(void)
+                0x0010554c                Scheduler::_CheckOut(unsigned long)
+                0x001057c4                Scheduler::_DisablePreemption(void)
+                0x00105468                Scheduler::_Schedule(void)
+                0x00105784                Scheduler::_EnablePreemption(void)
+ .text          0x00105900      0x2ec Kernel/Semaphore/Semaphore.o
+                0x00105a0c                Semaphore::_SetSemaphoreName(char const *)
+                0x00105918                Semaphore::_Signal(void)
+                0x00105a7c                Semaphore::_(void)
+                0x00105a50                __$_9Semaphore
+                0x00105980                Semaphore::_Wait(unsigned char)
+ .text          0x00105bec      0x1a4 Kernel/Semaphore/CreateSemaphore.o
+                0x00105c10                _CreateSemaphore(unsigned long *, char *, unsigned long)
+ .text          0x00105d90      0x160 Kernel/Semaphore/OpenSemaphore.o
+                0x00105db4                _OpenSemaphore(unsigned long *, char *)
+ .text          0x00105ef0      0x14c Kernel/Semaphore/SCSemaphore.o
+                0x00106024                _SCCreateSemaphore(void **)
+                0x00105f14                _SCSignalSemaphore(void **)
+                0x00106010                _SCOpenSemaphore(void **)
+                0x00105f90                _SCWaitSemaphore(void **)
+ .text          0x0010603c      0x288 Kernel/SystemCall/SystemCallDispatcher.o
+                0x001061f8                __GLOBAL_$D$g_SystemCallDispatcher
+                0x00106220                SystemCallDispatcher::_HookSystemCall(unsigned long, unsigned long (*)(void **))
+                0x00106048                SystemCallDispatcher::_(void)
+                0x00106208                SystemCallDispatcher::_Dispatch(unsigned long, void **)
+                0x00106250                __$_20SystemCallDispatcher
+                0x001061e8                __GLOBAL_$I$g_SystemCallDispatcher
+ .text          0x001062c4       0x80 Kernel/Thread/Thread.o
+                0x001062c4                Thread::_SetThreadName(char const *)
+                0x00106308                __$_6Thread
+                0x00106334                Thread::_(void)
+ .text          0x00106344      0x188 Kernel/Thread/CreateThread.o
+                0x00106368                _CreateThread(unsigned long *, unsigned long, char *, void *, void *, unsigned long, void *, unsigned char)
+ .text          0x001064cc       0xdc Kernel/Thread/TerminateThread.o
+                0x001064f0                _TerminateThread(unsigned long, unsigned long)
+ .text          0x001065a8       0x88 Kernel/Thread/SCThread.o
+                0x001065b4                _SCTerminateThread(void **)
+                0x001065cc                _SCCreateThread(void **)
+ .text          0x00106630       0x34 LibC/malloc/malloc.o
+                0x0010663c                _malloc(unsigned int)
+ .text          0x00106664       0x28 LibC/malloc/free.o
+                0x00106670                _free(void *)
+ .text          0x0010668c      0x600 LibC/Stdio/doprnt.o
+                0x00106694                __doprnt(char const *, void *, int, void (*)(char *, int), char *)
+ .text          0x00106c8c      0x15c LibC/Stdio/printf.o
+                0x00106c8c                _printf(char const *,...)
+                0x00106cf4                _vprintf(char const *, void *)
+ .text          0x00106de8       0x2c LibC/Stdio/puts.o
+                0x00106de8                _puts(char const *)
+ .text          0x00106e14      0x114 LibC/Stdio/sprintf.o
+                0x00106e50                _snprintf(char *, int, char const *,...)
+                0x00106e14                _sprintf(char *, char const *,...)
+                0x00106e8c                _vsnprintf(char *, int, char const *, void *)
+                0x00106ec8                _vsprintf(char *, char const *, void *)
+ .text          0x00106f28      0x10c LibC/Stdio/serial_io.o
+                0x00106fd4                _serial_putchar(int)
+                0x00106f28                _putchar(int)
+                0x0010700c                _serial_getchar(void)
+                0x00106f60                _serial_init(void)
+ .text          0x00107034       0x14 LibC/String/bcopy.o
+                0x00107034                _bcopy(void const *, void *, unsigned long)
+ .text          0x00107048       0x14 LibC/String/bzero.o
+                0x00107048                _bzero(void *, unsigned long)
+ .text          0x0010705c       0x38 LibC/String/memcmp.o
+                0x0010705c                _memcmp(void const *, void const *, unsigned long)
+ .text          0x00107094       0x28 LibC/String/strcmp.o
+                0x00107094                _strcmp(char const *, char const *)
+ .text          0x001070bc       0x28 LibC/String/strcpy.o
+                0x001070bc                _strcpy(char *, char const *)
+ .text          0x001070e4       0x24 LibC/String/strlen.o
+                0x001070e4                _strlen(char const *)
+ .text          0x00107108       0x38 LibC/assert/assert.o
+                0x00107128                __Assert(char *, unsigned int)
+ .text          0x00107140      0x168 LibC/djgpp/libgcc2.o
+                0x00107214                _set_new_handler(void (*)(void))
+                0x001071ec                ___builtin_delete
+                0x001071c4                _terminate(void)
+                0x001071d8                ___builtin_vec_delete
+                0x001071a8                ___throw
+                0x00107200                ___default_new_handler__Fv
+                0x0010726c                ___builtin_new
+                0x00107230                ___builtin_vec_new
+ .text          0x001072a8      0xa98 MemoryManager/MemoryManager.o
+                0x001076d4                MemoryManager::_Free(void *, unsigned int)
+                0x00107d14                MemoryManager::_Init(void)
+                0x00107ad8                MemoryManager::_Avail(unsigned int)
+                0x00107d38                MemoryManager::_(void)
+                0x00107ad0                MemoryManager::_Dump(void)
+                0x00107b6c                MemoryManager::_AddRegion(lmm_region *, void *, unsigned int, unsigned int, int)
+                0x001072c8                MemoryManager::_Alloc(unsigned int, unsigned int)
+                0x001079dc                MemoryManager::_FreePage(void *)
+                0x00107b2c                MemoryManager::_AllocPage(unsigned int)
+                0x00107c2c                MemoryManager::_AddFree(void *, unsigned int)
+                0x0010744c                MemoryManager::_AllocGen(unsigned int, unsigned int, int, unsigned int, unsigned int, unsigned int)
+                0x00107d24                __$_13MemoryManager
+                0x00107b4c                MemoryManager::_AllocAligned(unsigned int, unsigned int, int, unsigned int)
+                0x00107854                MemoryManager::_RemoveFree(void *, unsigned int)
+                0x001079f4                MemoryManager::_FindFree(unsigned int *, unsigned int *, unsigned int *)
+ *(.const*)
+ *(.ro*)
+                0x00107d40                etext=.
+                0x00107d40                _etext=.
+ *fill*         0x00107d40       0xc0
+                0x00107e00                .=ALIGN(0x200)
+
+.data           0x00107e00      0x400
+                0x00107e00                djgpp_first_ctor=.
+ *(.ctor)
+ .ctor          0x00107e00        0x4 Initialize/Globals.o
+ .ctor          0x00107e04        0x4 Kernel/SystemCall/SystemCallDispatcher.o
+                0x00107e08                djgpp_last_ctor=.
+                0x00107e08                djgpp_first_dtor=.
+ *(.dtor)
+ .dtor          0x00107e08        0x4 Initialize/Globals.o
+ .dtor          0x00107e0c        0x4 Kernel/SystemCall/SystemCallDispatcher.o
+                0x00107e10                djgpp_last_dtor=.
+ *(.data)
+ .data          0x00107e10      0x114 Hardware/Pentium/trap_tab.o
+                0x00107e10                _trap_inittab
+ .data          0x00107f24       0xfc Hardware/Pentium/cpuid.o
+ .data          0x00108020        0x4 Initialize/Initialize.o
+                0x00108020                _g_nAvailableMemory
+ .data          0x00108024       0x38 Initialize/Globals.o
+                0x00108034                _g_Scheduler
+                0x00108024                _g_MemoryManager
+                0x00108058                _g_nCurrentThreadID
+                0x00108054                _g_nCurrentProcessID
+                0x00108028                _g_MMU
+                0x00108030                _g_InterruptController
+                0x00108040                _g_arrayProcess
+                0x0010802c                _g_Processor
+                0x00108038                _g_InterruptDispatcher
+                0x0010804c                _g_arrayMutex
+                0x00108048                _g_arrayMessageQueue
+                0x0010803c                _g_arrayThread
+                0x00108050                _g_arraySemaphore
+                0x00108044                _g_arrayEvent
+ .data          0x0010805c       0x38 Initialize/Pentium/multi_boot_main.o
+                0x00108060                _boot_info
+                0x0010805c                _phys_mem_max
+ .data          0x00108094        0x4 Kernel/SystemCall/SystemCallDispatcher.o
+                0x00108094                _g_SystemCallDispatcher
+ .data          0x00108098        0x4 LibC/Stdio/doprnt.o
+                0x00108098                __doprnt_truncates
+ .data          0x0010809c        0x4 LibC/Stdio/serial_io.o
+ .data          0x001080a0        0x8 LibC/djgpp/libgcc2.o
+                0x001080a0                ___new_handler
+                0x001080a4                ___eh_pc
+                0x001080a8                edata=.
+                0x001080a8                _edata=.
+ *fill*         0x001080a8      0x158
+                0x00108200                .=ALIGN(0x200)
+
+.bss            0x00108200     0x1200
+ *(.bss)
+ .bss           0x00108200     0x1014 Initialize/Pentium/entry.o
+                0x00108200                _djgpp_first_ctor
+                0x0010820c                _djgpp_last_dtor
+                0x00108208                _djgpp_first_dtor
+                0x00108204                _djgpp_last_ctor
+ .bss           0x00109214       0x64 Initialize/Pentium/multi_boot_main.o
+ *(COMMON)
+                0x00109278                end=.
+                0x00109278                _end=.
+ *fill*         0x00109278      0x188
+                0x00109400                .=ALIGN(0x200)
+OUTPUT(kernel.bin binary)

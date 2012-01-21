@@ -1,0 +1,69 @@
+Archive member included       because of file (symbol)
+
+./libekernel.a(SystemCall.o)  proc2.o (SignalSemaphore(unsigned long))
+./libekernel.a(SystemCallStub.o)
+                              ./libekernel.a(SystemCall.o) (SystemCallStub(unsigned long, void **))
+
+Memory Configuration
+
+Name             Origin             Length            
+*default*        0x00000000         0xffffffff
+
+Linker script and memory map
+
+Address of section .text set to 0x80000000
+LOAD proc2.o
+LOAD ./libekernel.a
+
+.text           0x80000000      0x400
+ *(.text)
+ .text          0x80000000       0x84 proc2.o
+                0x8000000c                main
+ .text          0x80000084      0x1c8 ./libekernel.a(SystemCall.o)
+                0x800000f4                OpenMessageQueue(unsigned long *, char *)
+                0x80000178                OpenSemaphore(unsigned long *, char *)
+                0x800001f8                TerminateThread(unsigned long)
+                0x800000bc                SendMessage(unsigned long, unsigned long, unsigned long, unsigned long, bool)
+                0x8000020c                CreateThread(unsigned long *, char *, void (*)(void), void *, unsigned long, bool)
+                0x80000084                GetMessage(unsigned long, unsigned long *, unsigned long *, unsigned long *, bool)
+                0x800001dc                SerialPutchar(int)
+                0x800001c0                SerialPuts(char *)
+                0x80000198                CreateSemaphore(unsigned long *, char *, unsigned long)
+                0x8000013c                SignalSemaphore(unsigned long)
+                0x80000158                WaitSemaphore(unsigned long, bool)
+                0x80000114                CreateMessageQueue(unsigned long *, char *, unsigned long)
+ .text          0x8000024c       0x16 ./libekernel.a(SystemCallStub.o)
+                0x8000024c                SystemCallStub(unsigned long, void **)
+ *(.const*)
+ *(.ro*)
+                0x80000262                etext=.
+                0x80000262                _etext=.
+ *fill*         0x80000262      0x19e
+                0x80000400                .=ALIGN(0x200)
+
+.data           0x80000400      0x200
+                0x80000400                djgpp_first_ctor=.
+ *(.ctor)
+                0x80000400                djgpp_last_ctor=.
+                0x80000400                djgpp_first_dtor=.
+ *(.dtor)
+                0x80000400                djgpp_last_dtor=.
+ *(.data)
+ .data          0x80000400        0x4 proc2.o
+                0x80000400                nSemaphoreID
+                0x80000404                edata=.
+                0x80000404                _edata=.
+ *fill*         0x80000404      0x1fc
+                0x80000600                .=ALIGN(0x200)
+
+.bss            0x80000600        0x0
+ *(.bss)
+ *(COMMON)
+                0x80000600                end=.
+                0x80000600                _end=.
+                0x80000600                .=ALIGN(0x200)
+OUTPUT(proc2.cof coff-go32)
+
+.eh_fram        0x80000600      0x368
+ .eh_fram       0x80000600       0xa0 proc2.o
+ .eh_fram       0x800006a0      0x2c8 ./libekernel.a(SystemCall.o)
