@@ -1,0 +1,1 @@
+EKernel is an object-oriented micro kernel. Coding in C++.
